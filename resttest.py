@@ -2,6 +2,7 @@ import urllib.request
 import json
 import re
 import math
+import collections
 
 
 def url(page_num):
@@ -62,9 +63,14 @@ def connectAPI():
 
         print("The total number of duplicates is  %s" % len(duplicates))
         print("The total number of transactions when accounting for duplicates is %s" % (totalCount-len(duplicates)))
-        print("The total balance when accounting for duplicates is %s" % (totalBalance - total_balance(duplicates)))
+        print("The total balance when accounting for duplicates is %s \n" % (totalBalance - total_balance(duplicates)))
+
+        print("The daily_balances function provides a dictionary with all available dates as keys and the daily balances"
+              " as values. The daily balances are:")
+        print(json.dumps(daily_balances(transactions), indent=2, sort_keys=True ))
 
 
+        print(daily_balances(transactions))
 
 def total_balance(transactions):
     """
@@ -91,4 +97,19 @@ def remove_garbage(transactions):
     return transactions
 
 
-connectAPI()
+def daily_balances(transactions):
+    """
+    Calculates daily balances for each day and returns a dictionary with the key as date and value as total for that day.
+    """
+    dates = {}
+
+    for trans in transactions:
+        if trans['Date'] in dates:
+            dates[trans['Date']] += float(trans['Amount'])
+        else:
+            dates[trans['Date']] = float(trans['Amount'])
+
+    return dates
+
+if __name__ == '__main__':
+    connectAPI()
