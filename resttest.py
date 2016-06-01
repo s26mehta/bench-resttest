@@ -57,12 +57,14 @@ def connectAPI():
         print("The total number of transactions without accounting for duplicates is %s" % totalCount)
         print("The total balance without accounting for duplicates is %s \n" % totalBalance)
 
+        print("The remove_garbage function removes garbage from vendor names. For example: \"%s\" becomes \"%s\".\n" %
+              (transactions[8]["Company"], remove_garbage([transactions[8]])[0]["Company"]))
+
         print("The total number of duplicates is  %s" % len(duplicates))
         print("The total number of transactions when accounting for duplicates is %s" % (totalCount-len(duplicates)))
         print("The total balance when accounting for duplicates is %s" % (totalBalance - total_balance(duplicates)))
 
-        print("The remove_garbage function removes garbage from vendor names. For example: \"%s\" becomes \"%s\"" %
-              (transactions[8]["Company"], remove_garbage([transactions[8]])[0]["Company"]))
+
 
 def total_balance(transactions):
     """
@@ -80,11 +82,11 @@ def remove_garbage(transactions):
     Removes unnecessary info from vendor names and fixes any double spaces
     :return transactions with fixed vendor names
     """
-    garbage = re.compile(r'\w*[#@\d]\w*|\b(USD)\b|')
+    garbage = re.compile(r'\w*[#@.\d]\w*|\b(USD)\b|\s+$|')
 
     for trans in transactions:
         trans["Company"] = garbage.sub('', trans["Company"])
-        trans["Company"] = re.sub(' +', ' ', trans["Company"])
+        trans["Company"] = re.sub(' +', ' ', trans["Company"]).rstrip()
 
     return transactions
 
