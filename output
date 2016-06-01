@@ -1,0 +1,249 @@
+The total number of transactions without accounting for duplicates is 38
+The total balance without accounting for duplicates is 18377.16 
+
+The remove_garbage function removes garbage from vendor names. For example: "DROPBOX xxxxxx8396 CA 9.99 USD @ xx1001" becomes "DROPBOX CA".
+
+The total number of duplicates is  2
+The total number of transactions when accounting for duplicates is 36
+The total balance when accounting for duplicates is 20262.81 
+
+The daily_balances function provides a dictionary with all available dates as keys and the daily balances as values. The daily balances are:
+{
+  "2013-12-12": -227.35,
+  "2013-12-13": -1229.5800000000008,
+  "2013-12-15": -5.39,
+  "2013-12-16": -4575.53,
+  "2013-12-17": 10686.279999999999,
+  "2013-12-18": -1830.3899999999999,
+  "2013-12-19": 19753.309999999998,
+  "2013-12-20": -2179.85,
+  "2013-12-21": -17.98,
+  "2013-12-22": -110.71
+}
+
+
+The get_categories function provides a dictionary that lists the expenses as keys and the value holds an array with the first element being the total expense for that category and the rest of the elementshold the transactions for that category. The dictionary looks as such: 
+{
+  "Education": [
+    -4463.2,
+    {
+      "Date": "2013-12-16",
+      "Company": "CLOWN COLLEGE I VANCOUVER BC",
+      "Ledger": "Education",
+      "Amount": "-4463.2"
+    }
+  ],
+  "Web Hosting & Services Expense": [
+    -124.95,
+    {
+      "Date": "2013-12-19",
+      "Company": "DROPBOX CA",
+      "Ledger": "Web Hosting & Services Expense",
+      "Amount": "-10.99"
+    },
+    {
+      "Date": "2013-12-18",
+      "Company": "LINKEDIN LINKEDIN.COM",
+      "Ledger": "Web Hosting & Services Expense",
+      "Amount": "-50.95"
+    },
+    {
+      "Date": "2013-12-12",
+      "Company": "GROWINGCITY.COM xxxxxx4926 BC",
+      "Ledger": "Web Hosting & Services Expense",
+      "Amount": "-63.01"
+    }
+  ],
+  "Insurance Expense": [
+    -145.62,
+    {
+      "Date": "2013-12-18",
+      "Company": "LONDON DRUGS #78 VANCOUVER BC",
+      "Ledger": "Insurance Expense",
+      "Amount": "-22.94"
+    },
+    {
+      "Date": "2013-12-17",
+      "Company": "LONDON DRUGS 78 POSTAL VANCOUVER BC",
+      "Ledger": "Insurance Expense",
+      "Amount": "-4.87"
+    },
+    {
+      "Date": "2013-12-13",
+      "Company": "LONDON DRUGS 78 POSTAL VANCOUVER BC",
+      "Ledger": "Insurance Expense",
+      "Amount": "-117.81"
+    }
+  ],
+  "Auto Expense": [
+    -66.52,
+    {
+      "Date": "2013-12-17",
+      "Company": "SMART CITY FOODS xxxxxx3663 BC",
+      "Ledger": "Auto Expense",
+      "Amount": "6.23"
+    },
+    {
+      "Date": "2013-12-13",
+      "Company": "SMART CITY FOODS xxxxxx3663 BC",
+      "Ledger": "Auto Expense",
+      "Amount": "-72.75"
+    }
+  ],
+  "Office Expense": [
+    -701.67,
+    {
+      "Date": "2013-12-18",
+      "Company": "COSTCO WHOLESALE #55 CO VANCOUVER",
+      "Ledger": "Office Expense",
+      "Amount": "-642.79"
+    },
+    {
+      "Date": "2013-12-17",
+      "Company": "DYNAMEX EXPRESS xxxxxxxx6414 ON",
+      "Ledger": "Office Expense",
+      "Amount": "-16.35"
+    },
+    {
+      "Date": "2013-12-12",
+      "Company": "FEDEX xxxxx5291 MISSISSAUGA ON",
+      "Ledger": "Office Expense",
+      "Amount": "-42.53"
+    }
+  ],
+  "Phone & Internet Expense": [
+    -110.71,
+    {
+      "Date": "2013-12-22",
+      "Company": "SHAW CABLESYSTEMS CALGARY AB",
+      "Ledger": "Phone & Internet Expense",
+      "Amount": "-110.71"
+    }
+  ],
+  "Postage & Shipping Expense": [
+    -30.69,
+    {
+      "Date": "2013-12-12",
+      "Company": "DHL YVR GW RICHMOND BC",
+      "Ledger": "Postage & Shipping Expense",
+      "Amount": "-30.69"
+    }
+  ],
+  "Travel Expense, Nonlocal": [
+    -236.15,
+    {
+      "Date": "2013-12-21",
+      "Company": "BLACK TOP CABS VANCOUVER BC",
+      "Ledger": "Travel Expense, Nonlocal",
+      "Amount": "-8.1"
+    },
+    {
+      "Date": "2013-12-20",
+      "Company": "VANCOUVER TAXI VANCOUVER BC",
+      "Ledger": "Travel Expense, Nonlocal",
+      "Amount": "-7.6"
+    },
+    {
+      "Date": "2013-12-19",
+      "Company": "YELLOW CAB COMPANY LTD VANCOUVER",
+      "Ledger": "Travel Expense, Nonlocal",
+      "Amount": "-200"
+    },
+    {
+      "Date": "2013-12-18",
+      "Company": "VANCOUVER TAXI VANCOUVER BC",
+      "Ledger": "Travel Expense, Nonlocal",
+      "Amount": "-9.55"
+    },
+    {
+      "Date": "2013-12-18",
+      "Company": "YELLOW CAB CO LTD VANCOUVER BC",
+      "Ledger": "Travel Expense, Nonlocal",
+      "Amount": "-10.9"
+    }
+  ],
+  "Equipment Expense": [
+    -7913.77,
+    {
+      "Date": "2013-12-20",
+      "Company": "NINJA STAR WORLD VANCOUVER BC",
+      "Ledger": "Equipment Expense",
+      "Amount": "-1874.75"
+    },
+    {
+      "Date": "2013-12-13",
+      "Company": "ECHOSIGN xxxxxxxx6744 CA xx8.80 USD @ xx0878",
+      "Ledger": "Equipment Expense",
+      "Amount": "-520.85"
+    },
+    {
+      "Date": "2013-12-13",
+      "Company": "APPLE STORE #R280 VANCOUVER BC",
+      "Ledger": "Equipment Expense",
+      "Amount": "-5518.17"
+    }
+  ],
+  "Business Meals & Entertainment Expense": [
+    -1851.7599999999998,
+    {
+      "Date": "2013-12-21",
+      "Company": "GUILT & CO. VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-9.88"
+    },
+    {
+      "Date": "2013-12-20",
+      "Company": "COMMODORE LANES & BILL VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-120"
+    },
+    {
+      "Date": "2013-12-20",
+      "Company": "COMMODORE LANES & BILL VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-177.5"
+    },
+    {
+      "Date": "2013-12-19",
+      "Company": "NESTERS MARKET #x0064 VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-35.7"
+    },
+    {
+      "Date": "2013-12-18",
+      "Company": "NESTERS MARKET #x0064 VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-8.94"
+    },
+    {
+      "Date": "2013-12-18",
+      "Company": "BC LIQUOR #129 VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-1084.32"
+    },
+    {
+      "Date": "2013-12-17",
+      "Company": "JUSTIN STITCHES INC VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-206.58"
+    },
+    {
+      "Date": "2013-12-16",
+      "Company": "BOWS AND ARROWS COFFEE ROVICTORIA BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-112.33"
+    },
+    {
+      "Date": "2013-12-15",
+      "Company": "URBAN FARE #7618 VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-5.39"
+    },
+    {
+      "Date": "2013-12-12",
+      "Company": "NESTERS MARKET #x0064 VANCOUVER BC",
+      "Ledger": "Business Meals & Entertainment Expense",
+      "Amount": "-91.12"
+    }
+  ]
+}

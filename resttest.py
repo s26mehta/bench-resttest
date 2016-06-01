@@ -2,7 +2,6 @@ import urllib.request
 import json
 import re
 import math
-import collections
 
 
 def url(page_num):
@@ -25,21 +24,21 @@ def connectAPI():
 
     try:
         response = json.loads(urllib.request.urlopen(url(1)).read().decode("utf-8"))
-        for t in response["transactions"]:
+        for t in response['transactions']:
             if t in transactions:
                 duplicates.append(t)
             else:
                 transactions.append(t)
-            totalBalance += float(t["Amount"])
+            totalBalance += float(t['Amount'])
 
     except Exception as e:
         print("No data available at this page")
 
     if response is not None:
-        totalCount = response["totalCount"]
+        totalCount = response['totalCount']
 
-        if len(response["transactions"]) < totalCount:
-            countPerPage = len(response["transactions"])
+        if len(response['transactions']) < totalCount:
+            countPerPage = len(response['transactions'])
             num_pages = math.ceil(totalCount/countPerPage)
         else:
             num_pages = 1
@@ -47,30 +46,39 @@ def connectAPI():
         if num_pages != 1:
             for i in range(2, (num_pages+1)):
                 response = json.loads(urllib.request.urlopen(url(i)).read().decode("utf-8"))
-                for t in response["transactions"]:
+                for t in response['transactions']:
                     if t in transactions:
                         duplicates.append(t)
                     else:
                         transactions.append(t)
 
-                    totalBalance += float(t["Amount"])
+                    totalBalance += float(t['Amount'])
 
-        print("The total number of transactions without accounting for duplicates is %s" % totalCount)
-        print("The total balance without accounting for duplicates is %s \n" % totalBalance)
+        f = open('output', 'w')
+        f.write("The total number of transactions without accounting for duplicates is %s\n" % totalCount)
+        f.write("The total balance without accounting for duplicates is %s \n\n" % totalBalance)
 
-        print("The remove_garbage function removes garbage from vendor names. For example: \"%s\" becomes \"%s\".\n" %
+        f.write("The remove_garbage function removes garbage from vendor names. For example: \"%s\" becomes \"%s\".\n\n" %
               (transactions[8]["Company"], remove_garbage([transactions[8]])[0]["Company"]))
 
-        print("The total number of duplicates is  %s" % len(duplicates))
-        print("The total number of transactions when accounting for duplicates is %s" % (totalCount-len(duplicates)))
-        print("The total balance when accounting for duplicates is %s \n" % (totalBalance - total_balance(duplicates)))
+        f.write("The total number of duplicates is  %s\n" % len(duplicates))
+        f.write("The total number of transactions when accounting for duplicates is %s\n" % (totalCount-len(duplicates)))
+        f.write("The total balance when accounting for duplicates is %s \n\n" % (totalBalance - total_balance(duplicates)))
 
-        print("The daily_balances function provides a dictionary with all available dates as keys and the daily balances"
-              " as values. The daily balances are:")
-        print(json.dumps(daily_balances(transactions), indent=2, sort_keys=True ))
+        f.write("The daily_balances function provides a dictionary with all available dates as keys and the "
+              "daily balances as values. The daily balances are:\n")
+        f.write(json.dumps(daily_balances(transactions), indent=2, sort_keys=True))
+        f.write("\n\n")
 
+        f.write("\nThe get_categories function provides a dictionary that lists the expenses as keys and the value holds "
+              "an array with the first element being the total expense for that category and the rest of the elements"
+              "hold the transactions for that category. The dictionary looks as such: \n")
 
-        print(daily_balances(transactions))
+        f.write(json.dumps(get_categories(transactions), indent=2))
+        f.close()
+
+        print("FIN")
+
 
 def total_balance(transactions):
     """
@@ -79,7 +87,7 @@ def total_balance(transactions):
     """
     total = 0
     for t in transactions:
-        total += float(t["Amount"])
+        total += float(t['Amount'])
     return total
 
 
@@ -91,11 +99,26 @@ def remove_garbage(transactions):
     garbage = re.compile(r'\w*[#@.\d]\w*|\b(USD)\b|\s+$|')
 
     for trans in transactions:
-        trans["Company"] = garbage.sub('', trans["Company"])
-        trans["Company"] = re.sub(' +', ' ', trans["Company"]).rstrip()
+        trans['Company'] = garbage.sub('', trans['Company'])
+        trans['Company'] = re.sub(' +', ' ', trans['Company']).rstrip()
 
     return transactions
 
+
+def get_categories(transactions):
+    categories = {}
+
+    for trans in transactions:
+        if trans['Ledger'] in categories:
+            categories[trans['Ledger']][0] += float(trans['Amount'])
+            categories[trans['Ledger']].append(trans)
+        else:
+            if trans['Ledger'] != "":
+                categories[trans['Ledger']] = []
+                categories[trans['Ledger']].append(float(trans['Amount']))
+                categories[trans['Ledger']].append(trans)
+
+    return categories
 
 def daily_balances(transactions):
     """
